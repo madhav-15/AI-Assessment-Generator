@@ -99,19 +99,19 @@ npm install
 Create `backend/.env`:
 
 ```env
-PORT=4000
-MONGODB_URI=mongodb://localhost:27017/ai-assessment
-REDIS_URL=redis://localhost:6379
-AI_PROVIDER=auto                  # auto | anthropic | groq | openai-compatible
-ANTHROPIC_API_KEY=               # Claude key if using Anthropic
-GROQ_API_KEY=                    # Groq API key if using Groq
+PORT=<YOUR_PORT>
+MONGODB_URI=<YOUR_MONGODB_CONNECTION_STRING>
+REDIS_URL=<YOUR_REDIS_CONNECTION_STRING>
+AI_PROVIDER=auto                  
+ANTHROPIC_API_KEY=<YOUR_CLAUDE_API_KEY>
+GROQ_API_KEY=<YOUR_GROQ_API_KEY>
 AI_MODEL=claude-3-5-sonnet-20241022
 GROQ_BASE_URL=https://api.groq.com/openai/v1
 GROQ_MODEL=llama-3.3-70b-versatile
-LLM_BASE_URL=                    # Any OpenAI-compatible endpoint (GPT, OpenRouter, LM Studio, Ollama-compatible)
-LLM_API_KEY=                     # Token for the OpenAI-compatible endpoint
-LLM_MODEL=                       # Model name for the OpenAI-compatible endpoint
-AI_ALLOW_MOCK=false              # Keep false to avoid mock papers; true only for local fallback testing
+LLM_BASE_URL=<YOUR_CUSTOM_LLM_URL>
+LLM_API_KEY=<YOUR_CUSTOM_LLM_KEY>
+LLM_MODEL=<YOUR_CUSTOM_LLM_MODEL>
+AI_ALLOW_MOCK=false              
 ```
 
 ### 3. Start Services
