@@ -39,6 +39,7 @@ export default function ResultPage() {
 
     const loadResult = async () => {
       if ((questionPaper && questionPaper.assignmentId === id) || !id) {
+        setLoading(false);
         return;
       }
 
