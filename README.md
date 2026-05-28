@@ -28,12 +28,8 @@ An AI-powered assessment generation platform that enables educators to create st
 │  │              BullMQ Job Queue                     │   │
 │  │  ┌─────────────────────────────────────────────┐  │   │
 │  │  │  Generation Worker                          │  │   │
-│  │  │  1. Fetch assignment from MongoDB           │  │   │
-│  │  │  2. Build structured prompt                 │  │   │
-│  │  │  3. Call Claude API                         │  │   │
-│  │  │  4. Parse + validate JSON response          │  │   │
-│  │  │  5. Store QuestionPaper in MongoDB          │  │   │
-│  │  │  6. Broadcast completion via WebSocket      │  │   │
+│  │  │  1. Processes assignment & calls LLM API    │  │   │
+│  │  │  2. Stores parsed JSON & broadcasts status  │  │   │
 │  │  └─────────────────────────────────────────────┘  │   │
 │  └───────────────────────────────────────────────────┘   │
 │        │                                                  │
@@ -77,7 +73,7 @@ Generated papers are rendered with structured sections and can be exported as A4
 - Node.js 18+
 - MongoDB (local or Atlas)
 - Redis (local or Docker)
-- Anthropic API key (optional — mock generation works without it)
+- Supports both real LLM providers and local mock generation for development/testing.
 
 ### 1. Clone & Install
 
@@ -103,14 +99,7 @@ PORT=<YOUR_PORT>
 MONGODB_URI=<YOUR_MONGODB_CONNECTION_STRING>
 REDIS_URL=<YOUR_REDIS_CONNECTION_STRING>
 AI_PROVIDER=auto                  
-ANTHROPIC_API_KEY=<YOUR_CLAUDE_API_KEY>
-GROQ_API_KEY=<YOUR_GROQ_API_KEY>
-AI_MODEL=claude-3-5-sonnet-20241022
-GROQ_BASE_URL=https://api.groq.com/openai/v1
-GROQ_MODEL=llama-3.3-70b-versatile
-LLM_BASE_URL=<YOUR_CUSTOM_LLM_URL>
-LLM_API_KEY=<YOUR_CUSTOM_LLM_KEY>
-LLM_MODEL=<YOUR_CUSTOM_LLM_MODEL>
+AI_MODEL=<Claude / Llama compatible models>
 AI_ALLOW_MOCK=false              
 ```
 
