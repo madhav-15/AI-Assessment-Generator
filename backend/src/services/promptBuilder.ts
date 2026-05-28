@@ -3,7 +3,7 @@ import { QuestionPaperDocument, PaperSection, Question } from '../models/Questio
 
 export function buildPrompt(assignment: AssignmentDocument): string {
   const sectionsText = assignment.questionConfig.sections.map(s => `
-- ${s.name}: ${s.numberOfQuestions} ${s.questionType} questions, ${s.marksPerQuestion} marks each, difficulty: ${s.difficulty}`).join('');
+- ${s.name}: ${s.numberOfQuestions} ${s.questionType} questions, ${s.marksPerQuestion} marks each.`).join('');
 
   return `You are an expert educator creating a formal examination paper.
 
@@ -47,6 +47,7 @@ Required JSON structure:
 Rules:
 - questionNumber must be sequential per section
 - difficulty must be exactly "easy", "medium", or "hard"
+- Ensure a balanced mix of "easy", "medium", and "hard" questions across the paper unless instructed otherwise
 - For MCQ always include options array
 - For True/False include options: ["True", "False"]
 - Do not include answers unless specified`;
