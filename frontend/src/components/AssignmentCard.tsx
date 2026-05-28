@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MoreVertical, Trash2, Eye } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { formatDisplayDate } from "@/lib/date";
 
 interface AssignmentCardProps {
@@ -17,12 +18,14 @@ interface AssignmentCardProps {
 
 export function AssignmentCard({ assignment, onDelete }: AssignmentCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const router = useRouter();
   const formattedAssigned = formatDisplayDate(assignment.createdAt, "-");
   const formattedDue = formatDisplayDate(assignment.dueDate, "-");
 
   return (
     <div 
-      className="relative flex flex-col justify-between w-full"
+      onClick={() => router.push(`/result/${assignment._id}`)}
+      className="relative flex flex-col justify-between w-full cursor-pointer hover:bg-[#FAFAFA] transition-colors"
       style={{
         boxSizing: 'border-box',
         minHeight: '140px',
@@ -52,7 +55,10 @@ export function AssignmentCard({ assignment, onDelete }: AssignmentCardProps) {
         <div className="relative flex-shrink-0">
           <button 
             type="button" 
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setMenuOpen(!menuOpen);
+            }}
             className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 transition"
           >
             <MoreVertical className="w-6 h-6" style={{ color: '#A9A9A9' }} />
@@ -62,7 +68,10 @@ export function AssignmentCard({ assignment, onDelete }: AssignmentCardProps) {
           {menuOpen && (
             <>
               {/* Overlay background to dismiss */}
-              <div className="fixed inset-0 z-40" onClick={() => setMenuOpen(false)} />
+              <div className="fixed inset-0 z-40" onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpen(false);
+              }} />
               
               <div 
                 className="absolute right-0 mt-2 w-[160px] bg-white z-50 flex flex-col p-2 gap-1"
@@ -74,7 +83,10 @@ export function AssignmentCard({ assignment, onDelete }: AssignmentCardProps) {
                 {/* View Assignment */}
                 <Link 
                   href={`/result/${assignment._id}`}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMenuOpen(false);
+                  }}
                   className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#F6F6F6] text-left transition"
                 >
                   <Eye className="w-4 h-4 text-gray-500" />
@@ -85,7 +97,8 @@ export function AssignmentCard({ assignment, onDelete }: AssignmentCardProps) {
 
                 {/* Delete */}
                 <button 
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     onDelete(assignment._id);
                     setMenuOpen(false);
                   }}
