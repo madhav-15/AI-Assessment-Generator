@@ -60,21 +60,16 @@ An AI-powered assessment generation platform that enables educators to create st
 ## Approach
 
 ### 1. Assignment Creation
-The frontend form collects assignment parameters (title, subject, grade, due date, question types with counts/marks, file upload, additional instructions). State is managed via Zustand. On submit, data is sent to the Express API.
+The frontend form collects assignment parameters. State is managed via Zustand. On submit, data is sent to the Express API.
 
 ### 2. Background Processing
-The API creates an `Assignment` document in MongoDB and enqueues a BullMQ job. The generation worker:
-- Builds a structured prompt from assignment config using `promptBuilder.ts`
-- Calls Claude API with strict JSON output instructions
-- Parses the response, validates schema, normalizes difficulty levels, recalculates totals
-- Stores the result as a `QuestionPaper` document
-- Broadcasts real-time status updates via Socket.IO
+The API creates an `Assignment` in MongoDB and enqueues a BullMQ job. The worker:
+- Builds a structured prompt and calls the LLM.
+- Parses the JSON response and stores the `QuestionPaper`.
+- Broadcasts real-time status updates via Socket.IO.
 
-### 3. Real-time Updates
-The frontend connects to Socket.IO with the assignment ID as a room. The worker broadcasts status changes (`processing`, `completed`, `failed`) so the UI updates live without polling.
-
-### 4. Output Display
-Generated papers are rendered with structured sections, difficulty badges, marks, and student info fields. Papers can be exported as properly formatted A4 PDFs via Puppeteer.
+### 3. Output Display
+Generated papers are rendered with structured sections and can be exported as A4 PDFs.
 
 ## Setup Instructions
 
@@ -155,43 +150,24 @@ If no LLM credentials are configured, generation fails with a clear setup error 
 VedaAI/
 ├── backend/
 │   └── src/
-│       ├── index.ts                 # Express server + MongoDB connection
-│       ├── models/
-│       │   ├── Assignment.ts        # Assignment schema
-│       │   └── QuestionPaper.ts     # Generated paper schema
-│       ├── routes/
-│       │   ├── assignments.ts       # CRUD + file upload endpoints
-│       │   └── results.ts           # Result fetch + PDF generation
-│       ├── queues/
-│       │   └── generationQueue.ts   # BullMQ queue setup
-│       ├── workers/
-│       │   └── generationWorker.ts  # Background job processor
-│       ├── services/
-│       │   ├── aiService.ts         # Claude API integration
-│       │   ├── promptBuilder.ts     # Prompt construction + response parsing
-│       │   └── pdfService.ts        # Puppeteer PDF generation
-│       └── websocket/
-│           └── wsServer.ts          # Socket.IO server
+│       ├── config/              # Environment and DB configs
+│       ├── controllers/         # API business logic
+│       ├── middleware/          # Global error handling
+│       ├── models/              # Mongoose schemas
+│       ├── routes/              # Express endpoint mappings
+│       ├── queues/              # BullMQ queue setup
+│       ├── workers/             # Background job processor
+│       ├── services/            # AI, PDF, and Prompt services
+│       └── websocket/           # Socket.IO real-time server
 ├── frontend/
 │   └── src/
-│       ├── app/
-│       │   ├── layout.tsx           # Root layout with sidebar
-│       │   ├── page.tsx             # Assignments list (empty/filled state)
-│       │   ├── create/page.tsx      # Assignment creation form
-│       │   └── result/[id]/page.tsx # Generated paper output
-│       ├── components/
-│       │   ├── AssignmentForm.tsx    # Form with upload, steppers, pills
-│       │   ├── AssignmentCard.tsx    # Assignment list card
-│       │   ├── QuestionPaperView.tsx # Structured paper renderer
-│       │   └── layout/
-│       │       ├── Sidebar.tsx      # Navigation sidebar
-│       │       └── Topbar.tsx       # Top navigation bar
-│       ├── hooks/
-│       │   └── useWebSocket.ts      # Socket.IO client hook
-│       ├── store/
-│       │   └── assessmentStore.ts   # Zustand global state
-│       └── lib/
-│           └── api.ts               # REST API client functions
+│       ├── app/                 # Next.js pages (App Router)
+│       ├── components/          # Reusable UI components
+│       │   └── assignment/      # Modular form components
+│       ├── constants/           # Static config values
+│       ├── hooks/               # Custom React hooks
+│       ├── store/               # Zustand global state
+│       └── services/            # API client layer
 └── README.md
 ```
 
