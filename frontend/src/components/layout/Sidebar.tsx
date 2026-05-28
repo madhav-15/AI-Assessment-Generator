@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useId } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
@@ -21,6 +21,7 @@ const navItems = [
 export function Sidebar({ onClose }: { onClose?: () => void } = {}) {
   const pathname = usePathname();
   const { assignmentsCount, setJobState } = useAssessmentStore();
+  const uid = useId().replace(/:/g, '');
 
   useEffect(() => {
     let cancelled = false;
@@ -82,40 +83,40 @@ export function Sidebar({ onClose }: { onClose?: () => void } = {}) {
             }}
           >
             <svg width="40" height="40" viewBox="19.7144 1.85519 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flex: 'none', order: 0, flexGrow: 0 }}>
-              <rect x="19.7144" y="1.85519" width="40" height="40" rx="10" fill="url(#paint0_linear_2_9962)"/>
-              <g filter="url(#filter0_ddd_2_9962)">
+              <rect x="19.7144" y="1.85519" width="40" height="40" rx="10" fill={`url(#paint0_linear_${uid})`}/>
+              <g filter={`url(#filter0_ddd_${uid})`}>
                 <path fillRule="evenodd" clipRule="evenodd" d="M42.4414 30.2153C42.4414 30.2153 43.1689 32.1573 43.8356 32.2789H35.4113C33.7142 32.2789 32.1994 31.3079 31.7141 29.487L26.8051 14.9207C26.8051 14.9207 26.381 13.1606 25.7144 12.8571H34.3205C36.0176 12.9179 37.1691 13.5247 37.8358 15.7706L42.4414 30.2153Z" fill="white"/>
-                <path opacity="0.2" fillRule="evenodd" clipRule="evenodd" d="M42.4414 30.2153C42.4414 30.2153 43.1689 32.1573 43.8356 32.2789H35.4113C33.7142 32.2789 32.1994 31.3079 31.7141 29.487L26.8051 14.9207C26.8051 14.9207 26.381 13.1606 25.7144 12.8571H34.3205C36.0176 12.9179 37.1691 13.5247 37.8358 15.7706L42.4414 30.2153Z" fill="url(#paint1_linear_2_9962)"/>
+                <path opacity="0.2" fillRule="evenodd" clipRule="evenodd" d="M42.4414 30.2153C42.4414 30.2153 43.1689 32.1573 43.8356 32.2789H35.4113C33.7142 32.2789 32.1994 31.3079 31.7141 29.487L26.8051 14.9207C26.8051 14.9207 26.381 13.1606 25.7144 12.8571H34.3205C36.0176 12.9179 37.1691 13.5247 37.8358 15.7706L42.4414 30.2153Z" fill={`url(#paint1_linear_${uid})`}/>
                 <path fillRule="evenodd" clipRule="evenodd" d="M37.0472 30.2149C37.0472 30.2149 36.3198 32.1569 35.6531 32.2784H44.0774C45.7745 32.2784 47.2893 31.3074 47.7745 29.4865L52.6232 14.9207C52.6232 14.9207 53.0473 13.1606 53.714 12.8571H45.1681C43.471 12.8571 42.3803 13.464 41.7136 15.7098L37.0472 30.2149Z" fill="white"/>
               </g>
               <defs>
-                <filter id="filter0_ddd_2_9962" x="0.00007" y="0.000004" width="79.4281" height="70.8503" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+                <filter id={`filter0_ddd_${uid}`} x="0.00007" y="0.000004" width="79.4281" height="70.8503" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
                   <feFlood floodOpacity="0" result="BackgroundImageFix"/>
                   <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                   <feOffset dy="12.8571"/>
                   <feGaussianBlur stdDeviation="12.8571"/>
                   <feComposite in2="hardAlpha" operator="out"/>
                   <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"/>
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2_9962"/>
+                  <feBlend mode="normal" in2="BackgroundImageFix" result={`effect1_dropShadow_${uid}`}/>
                   <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                   <feOffset dy="8.57143"/>
                   <feGaussianBlur stdDeviation="8.57143"/>
                   <feComposite in2="hardAlpha" operator="out"/>
                   <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.15 0"/>
-                  <feBlend mode="normal" in2="effect1_dropShadow_2_9962" result="effect2_dropShadow_2_9962"/>
+                  <feBlend mode="normal" in2={`effect1_dropShadow_${uid}`} result={`effect2_dropShadow_${uid}`}/>
                   <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
                   <feOffset dy="4.28571"/>
                   <feGaussianBlur stdDeviation="4.28571"/>
                   <feComposite in2="hardAlpha" operator="out"/>
                   <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.2 0"/>
-                  <feBlend mode="normal" in2="effect2_dropShadow_2_9962" result="effect3_dropShadow_2_9962"/>
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect3_dropShadow_2_9962" result="shape"/>
+                  <feBlend mode="normal" in2={`effect2_dropShadow_${uid}`} result={`effect3_dropShadow_${uid}`}/>
+                  <feBlend mode="normal" in="SourceGraphic" in2={`effect3_dropShadow_${uid}`} result="shape"/>
                 </filter>
-                <linearGradient id="paint0_linear_2_9962" x1="39.7144" y1="1.85519" x2="39.7144" y2="41.8552" gradientUnits="userSpaceOnUse">
+                <linearGradient id={`paint0_linear_${uid}`} x1="39.7144" y1="1.85519" x2="39.7144" y2="41.8552" gradientUnits="userSpaceOnUse">
                   <stop stopColor="#E56820"/>
                   <stop offset="1" stopColor="#D45E3E"/>
                 </linearGradient>
-                <linearGradient id="paint1_linear_2_9962" x1="34.775" y1="11.2061" x2="34.775" y2="33.9908" gradientUnits="userSpaceOnUse">
+                <linearGradient id={`paint1_linear_${uid}`} x1="34.775" y1="11.2061" x2="34.775" y2="33.9908" gradientUnits="userSpaceOnUse">
                   <stop stopColor="white" stopOpacity="0"/>
                   <stop offset="0.33" stopColor="white" stopOpacity="0"/>
                   <stop offset="0.76" stopColor="#0E1513"/>
