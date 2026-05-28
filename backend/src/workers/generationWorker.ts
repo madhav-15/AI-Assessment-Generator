@@ -1,15 +1,14 @@
 import { Worker } from 'bullmq';
+import Redis from 'ioredis';
 import { Assignment } from '../models/Assignment';
 import { QuestionPaper } from '../models/QuestionPaper';
 import { generateQuestionPaperData } from '../services/aiService';
 import { broadcastStatus } from '../websocket/wsServer';
-import dotenv from 'dotenv';
-dotenv.config();
+import { env } from '../config/env';
 
-const connection = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-};
+const connection = new Redis(env.REDIS_URL, {
+  maxRetriesPerRequest: null,
+});
 
 export const generationWorker = new Worker(
   'generation-queue',

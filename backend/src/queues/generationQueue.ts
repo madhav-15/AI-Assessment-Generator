@@ -1,11 +1,10 @@
 import { Queue } from 'bullmq';
-import dotenv from 'dotenv';
-dotenv.config();
+import Redis from 'ioredis';
+import { env } from '../config/env';
 
-const connection = {
-  host: process.env.REDIS_HOST || 'localhost',
-  port: parseInt(process.env.REDIS_PORT || '6379'),
-};
+const connection = new Redis(env.REDIS_URL, {
+  maxRetriesPerRequest: null,
+});
 
 export const generationQueue = new Queue('generation-queue', {
   connection,
