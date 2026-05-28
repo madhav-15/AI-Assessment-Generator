@@ -56,7 +56,7 @@ export const generationWorker = new Worker(
       throw error; // Rethrow so BullMQ knows it failed
     }
   },
-  { connection }
+  { connection: connection as any }
 );
 
 generationWorker.on('failed', (job, err) => {

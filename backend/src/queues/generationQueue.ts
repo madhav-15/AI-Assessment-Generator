@@ -7,7 +7,7 @@ const connection = new Redis(env.REDIS_URL, {
 });
 
 export const generationQueue = new Queue('generation-queue', {
-  connection,
+  connection: connection as any,
 });
 
 export async function addGenerationJob(assignmentId: string) {
